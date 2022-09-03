@@ -67,8 +67,3 @@ spec:
       restartPolicy: Never
   backoffLimit: 4
 ```
-
-## References
-
-* https://www.envoyproxy.io/docs/envoy/latest/operations/admin#post--quitquitquit
-* https://medium.com/redbox-techblog/handling-istio-sidecars-in-kubernetes-jobs-c392661c4af7
