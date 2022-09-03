@@ -1,4 +1,4 @@
-# Wrapper for K8s Jobs with Istio Sidecar Injected
+# Wrapper for K8s Jobs + Istio Sidecar Injected
 
 Sidecar containers do not works well with k8s jobs. The job will keep running so long as the sidecar proxy is running. This is a general problem not specific to Istio (see [kubernetes/kubernetes#25908](https://github.com/kubernetes/kubernetes/issues/25908)). The typical sollution includes explicit terminate signaling between app and sidecar container such that the sidecar can exit when the app does.
 
