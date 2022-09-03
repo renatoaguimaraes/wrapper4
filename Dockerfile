@@ -21,4 +21,4 @@ LABEL org.opencontainers.image.source https://github.com/renatoaguimaraes/wrappe
 
 COPY --from=builder /build/wrapper .
 
-ENTRYPOINT [ "/wrapper" ]
+ENTRYPOINT [ "/wrapper", "<your cmd>", "<arg 1>", "<arg 2>" ]
