@@ -118,4 +118,4 @@ spec:
   backoffLimit: 4
 ```
 
-The [hook](./internal/hook/istio_proxy.go) for Istio Proxy sidecar will perform a request to http://localhost:15020/quitquitquit, a local administration interface that can be used to cleanly exit the server.
+The [plugin](./cmd/plugin) for Istio Proxy sidecar will perform a request to http://localhost:15020/quitquitquit, a local administration interface that can be used to cleanly exit the server.
