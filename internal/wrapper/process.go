@@ -6,7 +6,7 @@ import (
 	"os/exec"
 )
 
-func (w *wrapper) Run() Wrapper {
+func (w *pluginWrapper) Run() Wrapper {
 	if !w.IsPrepared() {
 		log.Println("wrapper", "not prepared")
 		return w
@@ -24,7 +24,7 @@ func (w *wrapper) Run() Wrapper {
 	log.Println("wrapper", "process", "finish")
 
 	log.Println("wrapper", "callback", "start")
-	w.hook()
+	w.plugin.Run()
 	log.Println("wrapper", "callback", "finish")
 
 	return w

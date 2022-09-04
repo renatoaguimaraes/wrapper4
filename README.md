@@ -31,28 +31,71 @@ In a distroless environment you don’t have access to ```sleep``` or ```curl```
 * https://www.solo.io/blog/challenges-of-running-istio-distroless-images/
 * https://stackoverflow.com/questions/54921054/terminate-istio-sidecar-istio-proxy-for-a-kubernetes-job-cronjob
 
+## Wrapper plugin implementation
+
+Echo plugin example.
+
+```golang
+package main
+
+import "log"
+
+// GetPlugin returns a plugin instance.
+// Called by plugin loader.
+func GetPlugin() interface{} {
+	return &echoPlugin{}
+}
+
+type echoPlugin struct{}
+
+// Run is an implementation of PluginRunner interface.
+// Your business logic should be added here.
+func (p echoPlugin) Run() {
+	log.Println("Echo demo plugin")
+}
+```
+
 ## How to use
 
 Wrapper build.
-```
+```shell
 go build -a -o wrapper ./cmd/wrapper
 ```
 
-The binary must be copied into the container and called by Docker ENTRYPOINT or by Kubernetes Job manifest, as you can see below.
+Plugin build.
+
+```shell
+go build -buildmode=plugin -a -o istio-proxy-plugin.so ./cmd/plugin/istio-proxy
+```
+
+Plugin build, in debug mode withou optimizations and inline.
+
+```shell
+go build -buildmode=plugin -gcflags="all=-N -l" -a -o istio-proxy-plugin.so ./cmd/plugin/istio-proxy
+```
+
+### Option 1 - Dockerfile ENTRYPOINT
 
 [Dockerfile](./Dockerfile) example.
 
 ```dockerfile
 FROM gcr.io/distroless/base:latest-amd64
 ...
-ENTRYPOINT [ "/wrapper", "<your cmd>", "<arg 1>", "<arg 2>" ]
+COPY wrapper /
+COPY istio-proxy-plugin.so /
+...
+ENV WRAPPER_PLUGIN_PATH=/istio-proxy-plugin.so
+...
+ENTRYPOINT [ "/wrapper", "ls", "-l" ]
 ```
 
 ```shell
 docker build . -t some-job-wrapper
 ```
 
-Kubernetes Job.
+### Option 2 - Kubernetes manifest
+
+The docker image, used bellow, must have the wrapper and wrapper plugin inside.
 
 ```yaml
 apiVersion: batch/v1
@@ -67,7 +110,10 @@ spec:
       containers:
       - name: pi
         image: some-job-wrapper
-        command: [ "/wrapper", "<your cmd>", "<arg 1>", "<arg 2>" ]
+        command: [ "/wrapper", "ls", "-l" ]
+        env:
+        - name: WRAPPER_PLUGIN_PATH
+          value: "/istio-proxy-plugin.so"
       restartPolicy: Never
   backoffLimit: 4
 ```
