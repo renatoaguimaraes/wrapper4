@@ -65,7 +65,7 @@ go build -a -o wrapper ./cmd/wrapper
 Plugin build.
 
 ```shell
-go build -buildmode=plugin -a -o istio-proxy-plugin.so ./cmd/plugin/istio-proxy
+go build -buildmode=plugin -o istio-proxy-plugin.so ./cmd/plugin/istio-proxy
 ```
 
 Plugin build, for debug mode without optimizations and inline.
@@ -80,6 +80,8 @@ go build -buildmode=plugin -gcflags="all=-N -l" -a -o istio-proxy-plugin.so ./cm
 
 ```dockerfile
 FROM gcr.io/distroless/base:latest-amd64
+...
+ENV CGO_ENABLED=1
 ...
 COPY wrapper /
 COPY istio-proxy-plugin.so /
