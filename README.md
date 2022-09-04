@@ -12,7 +12,7 @@ Sidecar containers do not works well with k8s jobs. The job will keep running so
 
 ### Distroless Docker Images
 
-In a distroless environment you don’t have access to ```sleep``` or ```curl``` as suggested in [istio/issues/6324](https://github.com/istio/istio/issues/6324).
+In a distroless environment you don’t have access to ```sleep``` or ```curl``` as suggested in [istio/issues/6324](https://github.com/istio/istio/issues/6324) to stop the Envoy Proxy in a Kubernetes Job. 
 
 * https://www.solo.io/blog/challenges-of-running-istio-distroless-images/
 * https://stackoverflow.com/questions/54921054/terminate-istio-sidecar-istio-proxy-for-a-kubernetes-job-cronjob
