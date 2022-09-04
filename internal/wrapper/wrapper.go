@@ -2,28 +2,44 @@ package wrapper
 
 import "os/exec"
 
-type Wrapper struct {
-	cmd      string
-	args     []string
-	proc     *exec.Cmd
-	procErr  error
-	callback func()
+type Wrapper interface {
+	Prepare() Wrapper
+	Run() Wrapper
+	Exit()
+
+	IsPrepared() bool
+	IsProcessed() bool
+	HasError() bool
 }
 
-func NewWrapper(callback func()) *Wrapper {
-	return &Wrapper{
-		callback: callback,
+// New Wrapper returns a new Wrapper whose the hook function should be informed.
+//
+//  wrapper.NewWrapper(hook.IstioProxyHalt).
+//  Prepare().
+//  Run().
+//  Exit()
+func NewWrapper(hook func()) Wrapper {
+	return &wrapper{
+		hook: hook,
 	}
 }
 
-func (w *Wrapper) IsPrepared() bool {
+type wrapper struct {
+	cmd     string
+	args    []string
+	proc    *exec.Cmd
+	procErr error
+	hook    func()
+}
+
+func (w *wrapper) IsPrepared() bool {
 	return w.cmd != ""
 }
 
-func (w *Wrapper) IsProcessed() bool {
+func (w *wrapper) IsProcessed() bool {
 	return w.proc != nil
 }
 
-func (w *Wrapper) HasError() bool {
+func (w *wrapper) HasError() bool {
 	return w.procErr != nil
 }

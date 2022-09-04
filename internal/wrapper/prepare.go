@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-func (w *Wrapper) Prepare() *Wrapper {
+func (w *wrapper) Prepare() Wrapper {
 	if w.IsPrepared() {
 		log.Fatalln("wrapper", "already prepared")
 	}
@@ -19,7 +19,7 @@ func (w *Wrapper) Prepare() *Wrapper {
 	if len(os.Args) > 2 {
 		w.args = os.Args[2:]
 	}
-	log.Println("wrapper", "command", "->", w.cmd, w.args)
+	log.Printf("wrapper command: %s args: %v", w.cmd, w.args)
 	log.Println("wrapper", "prepared")
 	return w
 }

@@ -1,8 +1,10 @@
-# Wrapper for K8s Jobs + Istio Sidecar
+# Wrapper for K8s Jobs + Sidecars
 
 Sidecar containers do not works well with k8s jobs. The job will keep running so long as the sidecar proxy is running. This is a general problem not specific to Istio (see [kubernetes/kubernetes#25908](https://github.com/kubernetes/kubernetes/issues/25908)). The typical sollution includes explicit terminate signaling between app and sidecar container such that the sidecar can exit when the app does.
 
-***K8s Job wrapper*** is very simple and light weight program, written in golang, that start a desired process and terminate istio-proxy sidecar after process is finish. The wrapper will send a signal to Envoy proxy to shutdown, the signal is a HTTP POST to http://localhost:15020/quitquitquit. This will gracefully shutdown both pilot-agent and the Envoy proxy.
+***K8s Job wrapper*** is very simple and light weight program, written in golang, that start a desired process and execute a hook function to terminate the sidecar,  after process is finish. 
+
+There is a hook implementation for Envoy Proxy sidecars,where a HTTP POST request is sent to http://localhost:15020/quitquitquit. This will gracefully shutdown both pilot-agent and the Envoy Proxy.
 
 ## Kubernetes Jobs
 
