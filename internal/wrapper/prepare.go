@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-func (w *wrapper) Prepare() Wrapper {
+func (w *pluginWrapper) Prepare() Wrapper {
 	if w.IsPrepared() {
 		log.Fatalln("wrapper", "already prepared")
 	}
