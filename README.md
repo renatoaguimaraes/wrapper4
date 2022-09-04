@@ -68,7 +68,7 @@ Plugin build.
 go build -buildmode=plugin -a -o istio-proxy-plugin.so ./cmd/plugin/istio-proxy
 ```
 
-Plugin build, in debug mode withou optimizations and inline.
+Plugin build, for debug mode without optimizations and inline.
 
 ```shell
 go build -buildmode=plugin -gcflags="all=-N -l" -a -o istio-proxy-plugin.so ./cmd/plugin/istio-proxy
