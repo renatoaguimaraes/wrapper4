@@ -1,4 +1,4 @@
-package callback
+package hook
 
 import (
 	"bytes"
@@ -7,7 +7,9 @@ import (
 	"time"
 )
 
-func Quit() {
+// IstioProxyHalt is a hook implementation to terminate Istio Proxy
+// that running as a sidecar and can be access from localhost.
+func IstioProxyHalt() {
 	req, err := http.NewRequest(http.MethodPost, "http://localhost:15000/quitquitquit", bytes.NewReader([]byte{}))
 	if err != nil {
 		log.Println("Invalid quit request", err)

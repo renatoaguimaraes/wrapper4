@@ -6,7 +6,7 @@ import (
 	"os/exec"
 )
 
-func (w *Wrapper) Process() *Wrapper {
+func (w *wrapper) Run() Wrapper {
 	if !w.IsPrepared() {
 		log.Println("wrapper", "not prepared")
 		return w
@@ -23,6 +23,9 @@ func (w *Wrapper) Process() *Wrapper {
 	w.procErr = w.proc.Run()
 	log.Println("wrapper", "process", "finish")
 
-	w.callback()
+	log.Println("wrapper", "callback", "start")
+	w.hook()
+	log.Println("wrapper", "callback", "finish")
+
 	return w
 }

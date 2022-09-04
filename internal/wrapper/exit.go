@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-func (w *Wrapper) Exit() {
+func (w *wrapper) Exit() {
 	if w.HasError() {
 		log.Println(w.procErr.Error())
 	}
