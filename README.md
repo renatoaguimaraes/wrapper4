@@ -2,7 +2,7 @@
 
 ***Wrapper4*** is very simple and light weight program, written in golang, that starts a desired process and execute a hook function when the process is finish. Was design in a modular way where you can develop a custom plugin to do whatever is needed.
 
-# Motivation
+## Motivation
 
 Sidecar containers do not works well with k8s jobs. The job will keep running so long as the sidecar proxy is running. This is a general problem not specific to Istio (see [kubernetes/kubernetes#25908](https://github.com/kubernetes/kubernetes/issues/25908)). The typical sollution includes explicit terminate signaling between app and sidecar container such that the sidecar can exit when the app does.
 
@@ -10,7 +10,7 @@ Sidecar containers do not works well with k8s jobs. The job will keep running so
 * https://github.com/istio/istio/issues/11045
 * https://github.com/kubernetes/kubernetes/issues/25908
 
-## Distroless Docker Images
+### Distroless Docker Images
 
 In a distroless environment you don’t have access to ```sleep``` or ```curl``` as suggested in [istio/issues/6324](https://github.com/istio/istio/issues/6324).
 
