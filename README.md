@@ -38,6 +38,8 @@ Wrapper build.
 go build -a -o wrapper ./cmd/wrapper
 ```
 
+The binary must be copied into the container and called by Docker ENTRYPOINT or by Kubernetes Job manifest, as you can see below.
+
 [Dockerfile](./Dockerfile) example.
 
 ```dockerfile
