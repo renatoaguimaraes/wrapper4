@@ -10,7 +10,6 @@ type Wrapper interface {
 	Prepare() Wrapper
 	Run() Wrapper
 	Exit()
-
 	IsPrepared() bool
 	IsProcessed() bool
 	HasError() bool
